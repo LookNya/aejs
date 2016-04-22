@@ -1,3 +1,4 @@
+// это должно быть в модели
 window.addEventListener('error', function(e) {
 	var err_text;
 	if (e.error) {
@@ -14,6 +15,7 @@ window.addEventListener('error', function(e) {
 function download(string, fileName, mimeType) {
 	//string, fileName, mimeType
 	if (navigator.msSaveOrOpenBlob) {
+		// ИЕ10+ и Edge (в последнем должен работать a[download], но не работает)
 		navigator.msSaveOrOpenBlob(new Blob([string], {type: mimeType}), fileName)
 	} else if (/Version\/[\d\.]+.*Safari/.test(navigator.userAgent)) {
 		// Safari
@@ -161,12 +163,16 @@ function getScrollbarSize(){
 }
 
 function calcPosForDropDown(params, ddWidth, ddHeight, margin){
+	//params: ClientRect блока, от которого показываем дропдаун
+	// точка - частный случай блока, у которого все углы на одной координате
 	var tWidth = document.body.clientWidth
 	var tHeight = document.body.clientHeight
 	var margin = margin || 0
 	var x = 0
 	var y = 0
+	//если дропдаун можно показать вниз
 	if(params.bottom + ddHeight < tHeight){
+		//если он влезает по ширине
 		if(params.left + ddWidth < tWidth){
 			x = params.left
 			y = params.bottom
@@ -185,6 +191,10 @@ function calcPosForDropDown(params, ddWidth, ddHeight, margin){
 	}
 	return {x:x, y:y}
 }
+// Если элемент null/undefined, создаёт и возвращает тег с именем `tagName`.
+// Если элемент не null/undefined, проверяет, что его тег - `tagName` и возвращает этот же элемент.
+// Если проверка тега не прошла, гидает ошибку с префиксом `errMsgPrefix`.
+// Например:
 //   maybe_null_elem = createOrCheckTag(maybe_null_elem, 'div', 'AHTUNG: ')
 function createOrCheckTag(elem, tagName, errMsgPrefix){
 	//elem, tagName, errMsgPrefix
@@ -196,8 +206,10 @@ function createOrCheckTag(elem, tagName, errMsgPrefix){
 	return elem
 }
 // //////////////////////////////////////////////////////////////////
+//ИЕ11 передаёт привет
 ;(function () {
 	try {
+		new window.CustomEvent('test', {detail: 0}) // в ИЕ11 это вызовет ошибку
 		return
 	} catch(e) {}
 
@@ -231,6 +243,7 @@ window.constructor.prototype.throwEvent = function(name, data, bubbles){
 Element.prototype.throwEvent = window.constructor.prototype.throwEvent
 initEvents = function(view){
 	//veiw obj {events: {...}}
+	//пары селектор - функция. Все, что в "custom", вешается на виндоу
 	var events = view.events
 	var ok = Object.keys(events)
 	for(var i = 0; i< ok.length; i++){
@@ -248,11 +261,13 @@ initEvents = function(view){
 				}
 			}
 		}catch(e){
+			console.error('Ошибка развешивания эвентов: '+ inOk[j])
 		}
 	}
 }
 removeEvents = function(view){
 	//view obj {events: {...}}
+	//пары селектор - функция. Все, что в "custom", вешается на виндоу
 	var events = view.events
 	var ok = Object.keys(events)
 	for(var i = 0; i< ok.length; i++){
@@ -270,6 +285,7 @@ removeEvents = function(view){
 				}
 			}
 		}catch(e){
+			console.error('Ошибка развешивания эвентов: '+ inOk[j])
 		}
 	}
 }
