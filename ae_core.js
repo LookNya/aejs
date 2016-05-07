@@ -1,40 +1,40 @@
 // это должно быть в модели
-window.addEventListener('error', function(e) {
-	var err_text;
-	if (e.error) {
-		err_text = e.message+"\n"+e.error.stack;
-	} else
-	if (e.message || e.filename) {
-		err_text = e.message+" in "+e.filename+":"+e.lineno+":"+e.colno;
-	} else {
-		err_text = "unknown error happened ("+(!!e.error)+")"
-	}
-	Model.error(err_text)
-});
+// window.addEventListener('error', function(e) {
+// 	var err_text;
+// 	if (e.error) {
+// 		err_text = e.message+"\n"+e.error.stack;
+// 	} else
+// 	if (e.message || e.filename) {
+// 		err_text = e.message+" in "+e.filename+":"+e.lineno+":"+e.colno;
+// 	} else {
+// 		err_text = "unknown error happened ("+(!!e.error)+")"
+// 	}
+// 	Model.error(err_text)
+// });
 
-function download(string, fileName, mimeType) {
-	//string, fileName, mimeType
-	if (navigator.msSaveOrOpenBlob) {
-		// ИЕ10+ и Edge (в последнем должен работать a[download], но не работает)
-		navigator.msSaveOrOpenBlob(new Blob([string], {type: mimeType}), fileName)
-	} else if (/Version\/[\d\.]+.*Safari/.test(navigator.userAgent)) {
-		// Safari
-		location.href = 'data:'+ mimeType +';charset=utf-8,'+ encodeURIComponent(string) //URL.createObjectURL(blob)
-	} else {
-		// FF, Chrome, Opera
-		var a = document.createElement('a')
-		a.href = 'data:'+ mimeType +';charset=utf-8,'+ encodeURIComponent(string)
-		a.target = '_blank'
-		//a.download = fileName
-		a.setAttribute('download', fileName)
-		document.body.appendChild(a)
-		a.click()
-		setTimeout(function(){ a.remove() }, 100)
-	}
-	//window.open('data:attachment/csv;charset=utf-8,' + encodeURIComponent(string))
-	//https://github.com/eligrey/FileSaver.js/blob/master/FileSaver.js
-	//https://github.com/rndme/download/blob/master/download.js
-}
+// function download(string, fileName, mimeType) {
+// 	//string, fileName, mimeType
+// 	if (navigator.msSaveOrOpenBlob) {
+// 		// ИЕ10+ и Edge (в последнем должен работать a[download], но не работает)
+// 		navigator.msSaveOrOpenBlob(new Blob([string], {type: mimeType}), fileName)
+// 	} else if (/Version\/[\d\.]+.*Safari/.test(navigator.userAgent)) {
+// 		// Safari
+// 		location.href = 'data:'+ mimeType +';charset=utf-8,'+ encodeURIComponent(string) //URL.createObjectURL(blob)
+// 	} else {
+// 		// FF, Chrome, Opera
+// 		var a = document.createElement('a')
+// 		a.href = 'data:'+ mimeType +';charset=utf-8,'+ encodeURIComponent(string)
+// 		a.target = '_blank'
+// 		//a.download = fileName
+// 		a.setAttribute('download', fileName)
+// 		document.body.appendChild(a)
+// 		a.click()
+// 		setTimeout(function(){ a.remove() }, 100)
+// 	}
+// 	//window.open('data:attachment/csv;charset=utf-8,' + encodeURIComponent(string))
+// 	//https://github.com/eligrey/FileSaver.js/blob/master/FileSaver.js
+// 	//https://github.com/rndme/download/blob/master/download.js
+// }
 
 // //////////////////////////////////////////////////////////////////
 $ = document.querySelector.bind(document)
@@ -153,7 +153,7 @@ function getScrollbarSize(){
 	var div = document.createElement('div')
 	div.style.position = 'absolute'
 	div.style.top = '90000px'
-	div.style.overflow = 'scroll' 
+	div.style.overflow = 'scroll'
 	document.body.appendChild(div)
 	var width = div.offsetWidth
 	var height = div.offsetHeight
