@@ -1,4 +1,4 @@
-// это должно быть в модели
+﻿// это должно быть в модели
 // window.addEventListener('error', function(e) {
 // 	var err_text;
 // 	if (e.error) {
@@ -70,7 +70,7 @@ if(!Element.prototype.matches){
 			var el = this
 			var matches = (el.document || el.ownerDocument).querySelectorAll(selector),
 				i = matches.length;
-			while (--i >= 0 && matches.item(i) !== elm) {}
+			while (--i >= 0 && matches.item(i) !== el) {}
 			return i > -1;
 		}
 	} else {
