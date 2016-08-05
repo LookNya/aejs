@@ -366,6 +366,31 @@ Object.clear = function(obj) {
 Object.extend = function(oldObj, data) {
 	for (var i in data) oldObj[i] = data[i]
 }
+// поиск внутри объекта по ключ-значение
+Object.prototype.findEntity = function(keyObj) {
+    var arr = this, p, key, val, ret;
+    for (p in keyObj) {
+        if (keyObj.hasOwnProperty(p)) {
+            key = p;
+            val = keyObj[p];
+        }
+    }
+    for (p in arr) {
+        if (p == key) {
+            if (arr[p] == val) {
+                return arr;
+            }
+        } else if (arr[p] instanceof Object) {
+            if (arr.hasOwnProperty(p)) {
+                ret = findEntity(arr[p], keyObj);
+                if (ret) {
+                    return ret;
+                }
+            }
+        }
+    }
+    return false;
+};
 function rd(min, max) {
 	var rand = min + Math.random() * (max + 1 - min);
 	rand = Math.floor(rand);
