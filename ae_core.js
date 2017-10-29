@@ -241,10 +241,9 @@ window.constructor.prototype.throwEvent = function(name, data, bubbles){
 	this.dispatchEvent(myEvent)
 }
 Element.prototype.throwEvent = window.constructor.prototype.throwEvent
-initEvents = function(view){
-	//veiw obj {events: {...}}
-	//пары селектор - функция. Все, что в "custom", вешается на виндоу
+UI.initEvents = function(view, key){
 	var events = view.events
+	if(key) events = events[key]
 	var ok = Object.keys(events)
 	for(var i = 0; i< ok.length; i++){
 		var type = ok[i]
@@ -261,7 +260,7 @@ initEvents = function(view){
 				}
 			}
 		}catch(e){
-			console.error('Ошибка развешивания эвентов: '+ inOk[j])
+			console.warn('Развешивание эвентов: нет такого элемента: '+ inOk[j])
 		}
 	}
 }
