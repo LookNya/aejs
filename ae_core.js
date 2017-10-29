@@ -241,7 +241,7 @@ window.constructor.prototype.throwEvent = function(name, data, bubbles){
 	this.dispatchEvent(myEvent)
 }
 Element.prototype.throwEvent = window.constructor.prototype.throwEvent
-UI.initEvents = function(view, key){
+initEvents = function(view, key){
 	var events = view.events
 	if(key) events = events[key]
 	var ok = Object.keys(events)
